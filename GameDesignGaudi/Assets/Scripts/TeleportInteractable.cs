@@ -7,12 +7,16 @@ public class TeleportInteractable : MonoBehaviour
 
     private bool playerInRange = false;
     private Transform player;
+    private PlayerTeleportState teleportState;
 
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(interactKey))
         {
-            TeleportPlayer();
+            if (teleportState != null && teleportState.CanUseTeleport())
+            {
+                TeleportPlayer();
+            }
         }
     }
 
@@ -42,6 +46,7 @@ public class TeleportInteractable : MonoBehaviour
         {
             playerInRange = true;
             player = other.transform;
+            teleportState = other.GetComponent<PlayerTeleportState>();
         }
     }
 
@@ -51,6 +56,7 @@ public class TeleportInteractable : MonoBehaviour
         {
             playerInRange = false;
             player = null;
+            teleportState = null;
         }
     }
 
@@ -58,7 +64,10 @@ public class TeleportInteractable : MonoBehaviour
     {
         if (playerInRange)
         {
-            GUI.Label(new Rect(Screen.width / 2 - 60, Screen.height - 80, 200, 30), "Pulsa E para entrar");
+            if (teleportState != null && teleportState.CanUseTeleport())
+            {
+                GUI.Label(new Rect(Screen.width / 2 - 60, Screen.height - 80, 200, 30), "Pulsa E para entrar");
+            }
         }
     }
 }
