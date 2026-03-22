@@ -6,10 +6,20 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movimiento")]
     public float moveSpeed = 5f;
     public float gravityRotationSpeed = 8f;
-    public float gravity = -20f;
-    public float jumpHeight = 1.2f;
     public float walkSpeed = 5f;
     public float sprintSpeed = 8f;
+
+    [Header("Salto y gravedad actual")]
+    public float gravity = -20f;
+    public float jumpHeight = 1.2f;
+
+    [Header("Valores normales")]
+    public float normalGravity = -20f;
+    public float normalJumpHeight = 1.2f;
+
+    [Header("Valores luna / Puzzle 2")]
+    public float moonGravity = -6f;
+    public float moonJumpHeight = 2.5f;
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -24,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+
+        gravity = normalGravity;
+        jumpHeight = normalJumpHeight;
     }
 
     public void SetGravityDirection(Vector3 newGravityDir, float newGravityForce)
@@ -31,7 +44,19 @@ public class PlayerMovement : MonoBehaviour
         if (newGravityDir == Vector3.zero) return;
 
         currentGravityDir = newGravityDir.normalized;
-        gravity = newGravityForce; // Actualizamos la fuerza para esta zona
+        gravity = newGravityForce;
+    }
+
+    public void SetMoonMode()
+    {
+        gravity = moonGravity;
+        jumpHeight = moonJumpHeight;
+    }
+
+    public void SetNormalMode()
+    {
+        gravity = normalGravity;
+        jumpHeight = normalJumpHeight;
     }
 
     void Update()
@@ -61,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
                 fallVelocity = currentGravityDir * 2f;
             }
 
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            if (Input.GetButtonDown("Jump"))
             {
                 fallVelocity = -currentGravityDir * Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
@@ -69,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         float currentGravityMagnitude = Mathf.Abs(gravity);
         fallVelocity += currentGravityDir * currentGravityMagnitude * Time.deltaTime;
-        
+
         controller.Move(fallVelocity * Time.deltaTime);
     }
 }
