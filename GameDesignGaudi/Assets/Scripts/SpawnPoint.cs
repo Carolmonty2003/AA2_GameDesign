@@ -9,6 +9,7 @@ public class SpawnPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+           
             TeleportarJugador(other.gameObject);
         }
     }

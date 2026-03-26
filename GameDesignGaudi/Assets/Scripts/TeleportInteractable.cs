@@ -5,7 +5,7 @@ public class TeleportInteractable : MonoBehaviour
     public Transform teleportDestination;
     public KeyCode interactKey = KeyCode.E;
 
-    private bool playerInRange = false;
+    public bool playerInRange = false;
     private Transform player;
     private PlayerTeleportState teleportState;
 

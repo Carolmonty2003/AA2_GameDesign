@@ -2,22 +2,12 @@ using UnityEngine;
 
 public class PlayerTeleportState : MonoBehaviour
 {
-    private int teleportBlockCount = 0;
+    private bool teleportBlockCount = false;
 
     public bool CanUseTeleport()
     {
-        return teleportBlockCount <= 0;
+        return true;
     }
 
-    public void AddBlock()
-    {
-        teleportBlockCount++;
-    }
-
-    public void RemoveBlock()
-    {
-        teleportBlockCount--;
-        if (teleportBlockCount < 0)
-            teleportBlockCount = 0;
-    }
+  
 }

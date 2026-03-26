@@ -7,10 +7,7 @@ public class PuzzleRoomTeleportBlocker : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerTeleportState state = other.GetComponent<PlayerTeleportState>();
-            if (state != null)
-            {
-                state.AddBlock();
-            }
+          
         }
     }
 
@@ -19,10 +16,7 @@ public class PuzzleRoomTeleportBlocker : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerTeleportState state = other.GetComponent<PlayerTeleportState>();
-            if (state != null)
-            {
-                state.RemoveBlock();
-            }
+         
         }
     }
 }
