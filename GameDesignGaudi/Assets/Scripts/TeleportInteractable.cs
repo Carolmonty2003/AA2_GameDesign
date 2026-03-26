@@ -66,7 +66,7 @@ public class TeleportInteractable : MonoBehaviour
         {
             if (teleportState != null && teleportState.CanUseTeleport())
             {
-                GUI.Label(new Rect(Screen.width / 2 - 60, Screen.height - 80, 200, 30), "Pulsa E para entrar");
+                GUI.Label(new Rect(Screen.width / 2 - 60, Screen.height - 80, 200, 30), "Pulsa F para entrar");
             }
         }
     }
