@@ -13,6 +13,12 @@ public class GravityZone : MonoBehaviour
     public Vector3 rotationAxis = Vector3.up;
     public float rotationSpeed = 30f;
 
+    [Header("Jump Modifier")]
+    public bool modifyJump = false;
+    public float jumpMultiplier = 1f;
+
+    private float originalJumpHeight = -1f;
+
     private List<Rigidbody> objectsInZone = new List<Rigidbody>();
     private PlayerMovement playerInZone;
 
@@ -26,6 +32,13 @@ public class GravityZone : MonoBehaviour
             {
                 playerInZone = player;
                 player.SetGravityDirection(gravityDirection, gravityForce);
+
+                // Guardar el jump original y aplicar el multiplicador si está activado
+                originalJumpHeight = player.jumpHeight;
+                if (modifyJump)
+                {
+                    player.jumpHeight = originalJumpHeight * jumpMultiplier;
+                }
             }
         }
 
@@ -51,6 +64,14 @@ public class GravityZone : MonoBehaviour
                 // Restore normal Unity gravity direction (down) and normal force
                 player.SetGravityDirection(Vector3.down, player.normalGravity);
                 Debug.Log("Salimos de la zona");
+
+                // Restaurar siempre el jump original al salir
+                if (originalJumpHeight >= 0f)
+                {
+                    player.jumpHeight = originalJumpHeight;
+                    originalJumpHeight = -1f;
+                }
+
                 if (playerInZone == player)
                 {
                     playerInZone = null;

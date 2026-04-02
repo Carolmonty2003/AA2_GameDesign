@@ -9,8 +9,18 @@ public class TeleportInteractable : MonoBehaviour
     private Transform player;
     private PlayerTeleportState teleportState;
 
+    // Cooldown para evitar que el mismo frame del teleport dispare interacciones en el destino
+    private bool justTeleported = false;
+
     void Update()
     {
+        // Si acabamos de teleportar, esperamos un frame antes de volver a escuchar input
+        if (justTeleported)
+        {
+            justTeleported = false;
+            return;
+        }
+
         if (playerInRange && Input.GetKeyDown(interactKey))
         {
             if (teleportState != null && teleportState.CanUseTeleport())
@@ -38,6 +48,13 @@ public class TeleportInteractable : MonoBehaviour
             player.position = teleportDestination.position;
             player.rotation = teleportDestination.rotation;
         }
+
+        // Al teletransportar con CharacterController, OnTriggerExit NO se dispara automaticamente.
+        // Reseteamos el estado manualmente para que no se pueda volver a teleportar en el mismo frame.
+        playerInRange = false;
+        player = null;
+        teleportState = null;
+        justTeleported = true;
     }
 
     private void OnTriggerEnter(Collider other)
