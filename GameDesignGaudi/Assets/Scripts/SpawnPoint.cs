@@ -3,6 +3,7 @@ using UnityEngine;
 public class SpawnPoint : MonoBehaviour
 {
     [SerializeField] GameObject spawnPoint;
+    [SerializeField] int numCheckPoint;
 
 
     private void OnTriggerEnter(Collider other)
@@ -21,6 +22,9 @@ public class SpawnPoint : MonoBehaviour
             Debug.LogError("Error: No has asignado el 'spawnPoint' en el inspector de la pared " + gameObject.name);
             return;
         }
+
+        
+        GameManager.Instance.CheckPointToTick(numCheckPoint);
 
         CharacterController cc = jugador.GetComponent<CharacterController>();
         

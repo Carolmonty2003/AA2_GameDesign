@@ -50,6 +50,7 @@ public class GravityZone : MonoBehaviour
             {
                 // Restore normal Unity gravity direction (down) and normal force
                 player.SetGravityDirection(Vector3.down, player.normalGravity);
+                Debug.Log("Salimos de la zona");
                 if (playerInZone == player)
                 {
                     playerInZone = null;
